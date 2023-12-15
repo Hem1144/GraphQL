@@ -1,11 +1,34 @@
 import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
 
-//* Server setup
-const server = new ApolloServer({});
+import db from "./_db.js";
 
-const { url } = await startStandaloneServer(server, {
-  listen: { port: 4000 },
+//! types
+import { typeDefs } from "./schema/schema.js";
+
+//! resolvers function
+const resolvers = {
+  Query: {
+    games() {
+      return db.games;
+    },
+    reviews() {
+      return db.reviews;
+    },
+    authors() {
+      return db.authors;
+    },
+  },
+};
+
+//* Server setup
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
 });
 
-console.log(`🚀  Server ready at: 4000`);
+const { url } = await startStandaloneServer(server, {
+  listen: { port: 5000 },
+});
+
+console.log(`🚀  Server ready at: 5000`);
