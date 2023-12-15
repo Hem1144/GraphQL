@@ -18,6 +18,10 @@ const resolvers = {
     authors() {
       return db.authors;
     },
+    //! first param parent, second args, third context
+    review(_, args) {
+      return db.reviews.find((review) => review.id === args.id);
+    },
   },
 };
 
