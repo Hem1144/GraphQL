@@ -55,6 +55,23 @@ const resolvers = {
       db.games = db.games.filter((g) => g.id !== args.id);
       return db.games;
     },
+    addGame(_, args) {
+      let game = {
+        ...args.game,
+        id: Math.floor(Math.random() * 10000).toString(),
+      };
+      db.games.push(game);
+      return game;
+    },
+    updateGame(_, args) {
+      db.games = db.games.map((g) => {
+        if (g.id === args.id) {
+          return { ...g, ...args.edits };
+        }
+        return g;
+      });
+      return db.games.find((g) => g.id === args.id);
+    },
   },
 };
 
@@ -110,4 +127,38 @@ console.log(`🚀  Server ready at: 5000`);
 //   platform
 //   title
 // }
+// }
+
+//! AddMutation logic
+// mutation AddMutation($game: AddGameInput!){
+// addGame(game: $game) {
+//   id
+//   platform
+//   title
+// }
+// }
+
+//* for variables
+// {
+//   "game":{
+//     "title": "My new game",
+//     "platform":["switch","ps5"]
+//   }
+// }
+
+//! UpdateMulation logic
+// mutation UpdateMutation($edits: EditGameInput!, $id:ID!){
+// updateGame(edits: $edits,id: $id) {
+//   platform
+//   title
+// }
+// }
+
+//* for variable
+// {
+//   "edits":{
+//     "title": "New updated Game",
+//     "platform":["vbox","chakra"]
+//   },
+//   "id": "2"
 // }
