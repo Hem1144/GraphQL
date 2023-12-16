@@ -49,6 +49,13 @@ const resolvers = {
       return db.games.find((g) => g.id === parent.game_id);
     },
   },
+
+  Mutation: {
+    deleteGame(_, args) {
+      db.games = db.games.filter((g) => g.id !== args.id);
+      return db.games;
+    },
+  },
 };
 
 //* Server setup
@@ -94,4 +101,13 @@ console.log(`🚀  Server ready at: 5000`);
 //       }
 //     },
 //   }
+// }
+
+//! Delete logic
+// mutation DeleteMutation($id: ID!){
+// deleteGame(id: $id) {
+//   id
+//   platform
+//   title
+// }
 // }
